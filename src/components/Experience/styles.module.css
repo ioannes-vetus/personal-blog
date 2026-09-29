@@ -1,0 +1,93 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(163, 130, 79, 0.25);
+}
+
+.item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.badge {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--ifm-color-primary);
+  color: var(--brand-cream);
+  font-family: var(--ifm-heading-font-family);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+.content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.role {
+  font-family: var(--ifm-heading-font-family);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--ifm-heading-color);
+}
+
+.company {
+  color: var(--brand-gold);
+}
+
+.meta {
+  margin-top: 0.15rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  opacity: 0.75;
+}
+
+.metaSeparator {
+  margin: 0 0.4rem;
+}
+
+.description {
+  margin: 0.75rem 0 0;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill {
+  padding: 0.2rem 0.7rem;
+  border: 1px solid rgba(163, 130, 79, 0.4);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--brand-gold);
+}

@@ -5,11 +5,11 @@ import {buildSearchIndex} from './src/searchIndex';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-// Served as a GitHub Pages project site: https://ioannes-vetus.github.io/mamcelka-blog/
-const baseUrl = '/mamcelka-blog/';
+// Served as a GitHub Pages project site: https://ioannes-vetus.github.io/personal-blog/
+const baseUrl = '/personal-blog/';
 
 const config: Config = {
-  title: 'Mamčelka',
+  title: 'Jan Stary',
   tagline: 'Úvahy o výchove z pohľadu mamy & učiteľky',
   favicon: 'img/favicon.ico',
 
@@ -17,7 +17,7 @@ const config: Config = {
   baseUrl,
 
   organizationName: 'ioannes-vetus',
-  projectName: 'mamcelka-blog',
+  projectName: 'personal-blog',
 
   onBrokenLinks: 'throw',
   markdown: {
@@ -64,17 +64,30 @@ const config: Config = {
   themes: ['@docusaurus/theme-mermaid'],
 
   themeConfig: {
-    image: 'img/social-card.jpeg',
     colorMode: {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Mamčelka',
+      title: 'Jan Stary',
       items: [{to: '/blog', label: 'Blog', position: 'left'}],
     },
     footer: {
       style: 'dark',
-      copyright: `Copyright © ${new Date().getFullYear()} Mamčelka<a href="${baseUrl}blog/rss.xml" target="_blank" rel="noopener noreferrer" title="RSS Feed" aria-label="RSS Feed" class="footer-rss-link"><img src="${baseUrl}img/rss.svg" width="14" height="14" alt="RSS Feed"/></a>`,
+      links: [
+        {
+          html: `<a href="${baseUrl}blog/rss.xml" target="_blank" rel="noopener noreferrer" title="RSS Feed" aria-label="RSS Feed" class="footer-social-link"><img src="${baseUrl}img/rss.svg" width="14" height="14" alt="RSS Feed"/></a>`,
+        },
+        {
+          html: `<a href="https://www.linkedin.com/in/ján-starý-034626134" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn" class="footer-social-link"><img src="${baseUrl}img/linkedin.svg" width="14" height="14" alt="LinkedIn"/></a>`,
+        },
+        {
+          html: `<a href="https://github.com/ioannes-vetus" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub" class="footer-social-link"><img src="${baseUrl}img/github.svg" width="14" height="14" alt="GitHub"/></a>`,
+        },
+        {
+          html: `<a href="mailto:jan.stary@protonmail.com" title="E-mail" aria-label="E-mail" class="footer-social-link"><img src="${baseUrl}img/mail.svg" width="14" height="14" alt="E-mail"/></a>`,
+        },
+      ],
+      copyright: `Copyright © ${new Date().getFullYear()} Ján Starý`,
     },
     prism: {
       theme: prismThemes.github,

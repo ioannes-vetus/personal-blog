@@ -1,9 +1,6 @@
-vychova:
-  label: výchova
-  description: Príspevky o výchove.
-emocie:
-  label: emócie
-  description: Príspevky o emóciách.
-zrkadlenie:
-  label: zrkadlenie
-  description: Príspevky o zrkadlení.
+software-enginering:
+  label: Software engineering
+  description: Blog posts related to the software engineering in general
+ai:
+  label: AI
+  description: Blog posts related to the AI
