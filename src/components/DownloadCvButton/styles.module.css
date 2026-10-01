@@ -1,0 +1,11 @@
+.button {
+  appearance: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: wait;
+}

@@ -1,0 +1,19 @@
+.bioGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2.5rem;
+  text-align: left;
+}
+
+@media (min-width: 760px) {
+  .bioGrid {
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+  }
+}
+
+.bioColumn {
+  display: flex;
+  flex-direction: column;
+}

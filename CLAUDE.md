@@ -61,17 +61,23 @@ props (no defaults) — the only call site is `src/pages/index.tsx`.
 
 ### `baseUrl` handling
 
-The site is deployed as a GitHub Pages *project* site at
-`https://ioannes-vetus.github.io/personal-blog/`, so `baseUrl` in `docusaurus.config.ts` is
-`/personal-blog/`, not `/`. A `const baseUrl` is defined once at the top of the config and reused
-both for the `baseUrl` field and for hand-written absolute paths inside the footer's raw HTML
-`copyright` string (that string bypasses React's `useBaseUrl`/`<Link>` resolution, so it needs the
-prefix manually). If you hardcode any other absolute path (`/img/...`, `/blog/...`) outside JSX,
-route it through this same `baseUrl` constant or it will 404 once deployed. Inside JSX/TSX, prefer
-`useBaseUrl()` or Docusaurus's `<Link>`, which handle this automatically.
+The site is served on the custom domain `https://janstary.com` (via GitHub Pages' "Custom domain"
+setting plus the `static/CNAME` file, which Docusaurus copies to the build root), so it lives at the
+domain root and `baseUrl` in `docusaurus.config.ts` is `/`. A `const baseUrl` is still defined once
+at the top of the config and reused both for the `baseUrl` field and for hand-written absolute paths
+inside the footer's raw HTML `copyright` string (that string bypasses React's
+`useBaseUrl`/`<Link>` resolution, so it needs the prefix manually) — keep routing any other
+hardcoded absolute path (`/img/...`, `/blog/...`) outside JSX through this same constant, in case the
+site is ever moved back under a sub-path. Inside JSX/TSX, prefer `useBaseUrl()` or Docusaurus's
+`<Link>`, which handle this automatically.
 
 ### Deployment
 
 GitHub Actions (`.github/workflows/ci.yml`) builds and deploys to GitHub Pages on every push to
-`main`. The repo's Settings → Pages source must be set to "GitHub Actions" for this to work — that's
-a one-time manual setting, not something the workflow file controls.
+`main`. Two one-time manual settings outside the workflow file are required for this to work:
+
+- Settings → Pages → Source must be set to "GitHub Actions".
+- Settings → Pages → Custom domain must be set to `janstary.com`, and the domain's DNS must point at
+  GitHub Pages (an `A`/`ALIAS` record at the apex to GitHub's Pages IPs, or a `CNAME` record if
+  serving from a `www` subdomain instead). The `static/CNAME` file only tells GitHub Pages which
+  domain to serve the build under; it doesn't configure DNS.

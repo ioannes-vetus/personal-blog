@@ -5,15 +5,16 @@ import {buildSearchIndex} from './src/searchIndex';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-// Served as a GitHub Pages project site: https://ioannes-vetus.github.io/personal-blog/
-const baseUrl = '/personal-blog/';
+// Served on a custom domain (GitHub Pages "Custom domain" setting + static/CNAME file),
+// so the site lives at the domain root rather than under a /<repo>/ path.
+const baseUrl = '/';
 
 const config: Config = {
   title: 'Jan Stary',
   tagline: 'Úvahy o výchove z pohľadu mamy & učiteľky',
   favicon: 'img/favicon.ico',
 
-  url: 'https://ioannes-vetus.github.io',
+  url: 'https://janstary.com',
   baseUrl,
 
   organizationName: 'ioannes-vetus',

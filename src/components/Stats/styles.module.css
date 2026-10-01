@@ -1,0 +1,46 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 1.1rem 1.4rem;
+  border-radius: 14px;
+  text-align: left;
+}
+
+.value {
+  font-family: var(--ifm-heading-font-family);
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.label {
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  opacity: 0.85;
+}
+
+.cardDark {
+  background: var(--brand-footer-bg);
+  color: var(--brand-overlay-text);
+}
+
+.cardGold {
+  background: var(--brand-card-bg);
+  border: 1px solid rgba(163, 130, 79, 0.25);
+  border-left: 4px solid var(--brand-gold);
+  color: var(--brand-gold);
+}
+
+.cardGreen {
+  background: var(--brand-card-bg);
+  border: 1px solid rgba(163, 130, 79, 0.25);
+  border-left: 4px solid var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styles from './styles.module.css';
 
 export interface ExperienceItem {
@@ -7,6 +7,7 @@ export interface ExperienceItem {
   readonly start: Date;
   readonly end?: Date;
   readonly location?: string;
+  readonly domain?: string;
   readonly description: string;
   readonly skills?: string[];
 }
@@ -59,7 +60,7 @@ function formatDuration(months: number): string {
   return parts.join(' ');
 }
 
-function formatPeriod(start: Date, end?: Date): string {
+export function formatPeriod(start: Date, end?: Date): string {
   const endDate = end ?? new Date();
 
   const totalMonths =
@@ -72,38 +73,225 @@ function formatPeriod(start: Date, end?: Date): string {
   } · ${formatDuration(totalMonths)}`;
 }
 
+function itemKey(item: ExperienceItem): string {
+  return `${item.company}-${item.role}-${item.start.getTime()}`;
+}
+
+function Meta({item}: {item: ExperienceItem}): React.ReactElement {
+  return (
+    <div className={styles.meta}>
+      <span className={styles.period}>
+        {formatPeriod(item.start, item.end)}
+      </span>
+      {item.location && (
+        <>
+          <span className={styles.metaSeparator}>·</span>
+          <span className={styles.location}>{item.location}</span>
+        </>
+      )}
+    </div>
+  );
+}
+
+function Card({
+  item,
+  onOpen,
+}: {
+  item: ExperienceItem;
+  onOpen: (item: ExperienceItem, trigger: HTMLButtonElement) => void;
+}): React.ReactElement {
+  return (
+    <button
+      type="button"
+      className={styles.card}
+      aria-haspopup="dialog"
+      aria-label={`${item.role} at ${item.company} — view details`}
+      onClick={(event) => onOpen(item, event.currentTarget)}>
+      <div className={styles.body}>
+        <div className={styles.header}>
+          <span className={styles.role}>{item.role}</span>
+          <span className={styles.company}>{item.company}</span>
+        </div>
+        <Meta item={item} />
+        {item.domain && <span className={styles.domain}>{item.domain}</span>}
+        {item.description && (
+          <p className={styles.cardDescription}>{item.description}</p>
+        )}
+        <span className={styles.readMore}>
+          Read more
+          <span className={styles.readMoreArrow} aria-hidden="true">
+            →
+          </span>
+        </span>
+      </div>
+    </button>
+  );
+}
+
+const SCROLL_STEP_RATIO = 0.9;
+
+function Timeline({
+  items,
+  onOpen,
+}: {
+  items: ExperienceItem[];
+  onOpen: (item: ExperienceItem, trigger: HTMLButtonElement) => void;
+}): React.ReactElement {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const sortedItems = [...items].sort(
+    (a, b) => b.start.getTime() - a.start.getTime(),
+  );
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) {
+      return;
+    }
+
+    function updateScrollState(): void {
+      if (!el) {
+        return;
+      }
+      setCanScrollLeft(el.scrollLeft > 4);
+      setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+    }
+
+    updateScrollState();
+    el.addEventListener('scroll', updateScrollState, {passive: true});
+    window.addEventListener('resize', updateScrollState);
+    return () => {
+      el.removeEventListener('scroll', updateScrollState);
+      window.removeEventListener('resize', updateScrollState);
+    };
+  }, []);
+
+  function scrollByStep(direction: 1 | -1): void {
+    const el = scrollRef.current;
+    if (!el) {
+      return;
+    }
+    el.scrollBy({
+      left: direction * el.clientWidth * SCROLL_STEP_RATIO,
+      behavior: 'smooth',
+    });
+  }
+
+  return (
+    <div className={styles.timelineRow}>
+      <button
+        type="button"
+        className={styles.timelineArrow}
+        onClick={() => scrollByStep(-1)}
+        disabled={!canScrollLeft}
+        aria-label="Scroll to earlier roles">
+        ‹
+      </button>
+      <div
+        className={styles.timelineScroll}
+        ref={scrollRef}
+        tabIndex={0}
+        aria-label="Experience timeline">
+        <div className={styles.timelineTrack}>
+          {sortedItems.map((item) => (
+            <div key={itemKey(item)} className={styles.timelineItem}>
+              <span className={styles.timelineDot} aria-hidden="true" />
+              <Card item={item} onOpen={onOpen} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <button
+        type="button"
+        className={styles.timelineArrow}
+        onClick={() => scrollByStep(1)}
+        disabled={!canScrollRight}
+        aria-label="Scroll to later roles">
+        ›
+      </button>
+    </div>
+  );
+}
+
 export default function Experience({
   items,
 }: ExperienceProps): React.ReactElement {
+  const [activeItem, setActiveItem] = useState<ExperienceItem | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
+
+  function openItem(item: ExperienceItem, trigger: HTMLButtonElement): void {
+    lastTriggerRef.current = trigger;
+    setActiveItem(item);
+  }
+
+  useEffect(() => {
+    if (activeItem === null) {
+      return;
+    }
+
+    document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
+
+    function handleKeyDown(event: KeyboardEvent): void {
+      if (event.key === 'Escape') {
+        setActiveItem(null);
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleKeyDown);
+      lastTriggerRef.current?.focus();
+    };
+  }, [activeItem]);
+
   return (
-    <ul className={styles.list}>
-      {items.map((item) => (
-        <li key={`${item.company}-${item.role}`} className={styles.item}>
-          <div className={styles.badge} aria-hidden="true">
-            {initials(item.company)}
-          </div>
-          <div className={styles.content}>
-            <div className={styles.header}>
-              <span className={styles.role}>{item.role}</span>
-              <span className={styles.company}>{item.company}</span>
+    <>
+      <Timeline items={items} onOpen={openItem} />
+
+      {activeItem && (
+        <div
+          className={styles.overlay}
+          role="presentation"
+          onClick={() => setActiveItem(null)}>
+          <div
+            className={styles.modal}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="experience-modal-title"
+            onClick={(event) => event.stopPropagation()}>
+            <button
+              ref={closeButtonRef}
+              type="button"
+              className={styles.closeButton}
+              onClick={() => setActiveItem(null)}
+              aria-label="Close">
+              ×
+            </button>
+            <div className={styles.modalHeader}>
+              <div className={styles.badge} aria-hidden="true">
+                {initials(activeItem.company)}
+              </div>
+              <div>
+                <h3 id="experience-modal-title" className={styles.role}>
+                  {activeItem.role}
+                </h3>
+                <span className={styles.company}>{activeItem.company}</span>
+              </div>
             </div>
-            <div className={styles.meta}>
-              <span className={styles.period}>
-                {formatPeriod(item.start, item.end)}
-              </span>
-              {item.location && (
-                <>
-                  <span className={styles.metaSeparator}>·</span>
-                  <span className={styles.location}>{item.location}</span>
-                </>
-              )}
-            </div>
-            {item.description && (
-              <p className={styles.description}>{item.description}</p>
+            <Meta item={activeItem} />
+            {activeItem.domain && (
+              <span className={styles.domain}>{activeItem.domain}</span>
             )}
-            {item.skills && item.skills.length > 0 && (
+            {activeItem.description && (
+              <p className={styles.description}>{activeItem.description}</p>
+            )}
+            {activeItem.skills && activeItem.skills.length > 0 && (
               <ul className={styles.skills}>
-                {item.skills.map((skill) => (
+                {activeItem.skills.map((skill) => (
                   <li key={skill} className={styles.skill}>
                     {skill}
                   </li>
@@ -111,8 +299,8 @@ export default function Experience({
               </ul>
             )}
           </div>
-        </li>
-      ))}
-    </ul>
+        </div>
+      )}
+    </>
   );
 }

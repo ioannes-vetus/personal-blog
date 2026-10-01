@@ -19,6 +19,10 @@
   --brand-ink: #1c2b22;
   --brand-gold: #a3824f;
   --brand-footer-bg: #16241a;
+  --brand-card-bg: #fffefb;
+  /* Fixed light text for content sitting on a permanently dark surface
+     (hero photo overlay, footer-bg cards) - must never flip with theme. */
+  --brand-overlay-text: #f8f6f0;
 
   --ifm-background-color: var(--brand-cream);
   --ifm-font-color-base: var(--brand-ink);
@@ -45,6 +49,7 @@
   --brand-cream: #101913;
   --brand-ink: #e9ece8;
   --brand-gold: #c7a86d;
+  --brand-card-bg: #16221a;
 
   --ifm-background-color: #0e1712;
   --ifm-font-color-base: var(--brand-ink);
