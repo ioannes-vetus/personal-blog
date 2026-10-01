@@ -1,6 +1,4 @@
-# Mamčelka
-
-Personal blog for Natália Stará, built with [Docusaurus](https://docusaurus.io/).
+# Personal blog
 
 ## Development
 

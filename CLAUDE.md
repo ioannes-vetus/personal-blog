@@ -39,8 +39,8 @@ Site search is entirely hand-rolled, not Algolia/local-search:
   `src/pages/index.tsx` sets this on its content wrapper. If you add another plain page you want
   searchable, tag its content container the same way.
 - `src/theme/SearchBar/index.tsx` is a swizzled replacement for the default navbar search. It
-  fetches `search-index.json` client-side and queries it with `minisearch`. All of its user-facing
-  strings are in Slovak (the site's content language), even though code/identifiers stay in English.
+  fetches `search-index.json` client-side and queries it with `minisearch`. Its user-facing strings
+  are in English, matching the site's content language.
 
 ### Theming
 

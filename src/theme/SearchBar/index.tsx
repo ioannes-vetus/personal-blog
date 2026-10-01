@@ -138,10 +138,10 @@ export default function SearchBar(): React.ReactElement {
       <button
         className={styles.trigger}
         onClick={() => setIsOpen(true)}
-        aria-label="Hľadať"
+        aria-label="Search"
         type="button">
         <SearchIcon />
-        <span className={styles.triggerLabel}>Hľadať</span>
+        <span className={styles.triggerLabel}>Search</span>
         <kbd className={styles.kbd}>⌘K</kbd>
       </button>
 
@@ -157,7 +157,7 @@ export default function SearchBar(): React.ReactElement {
                   ref={inputRef}
                   className={styles.input}
                   type="text"
-                  placeholder="Hľadať na stránke…"
+                  placeholder="Search the site…"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={handleKeyDown}
@@ -196,7 +196,7 @@ export default function SearchBar(): React.ReactElement {
 
               {indexState === 'missing' && (
                 <div className={styles.noResults}>
-                  Vyhľadávací index je dostupný až po zostavení (
+                  The search index is only available after a production build (
                   <code>yarn build</code>).
                 </div>
               )}
@@ -205,20 +205,20 @@ export default function SearchBar(): React.ReactElement {
                 query.length >= MIN_QUERY_LENGTH &&
                 results.length === 0 && (
                   <div className={styles.noResults}>
-                    Žiadne výsledky pre &ldquo;{query}&rdquo;
+                    No results for &ldquo;{query}&rdquo;
                   </div>
                 )}
 
               <div className={styles.footer}>
                 <span>
                   <kbd className={styles.kbdSmall}>↑</kbd>
-                  <kbd className={styles.kbdSmall}>↓</kbd> pohyb
+                  <kbd className={styles.kbdSmall}>↓</kbd> navigate
                 </span>
                 <span>
-                  <kbd className={styles.kbdSmall}>↵</kbd> otvoriť
+                  <kbd className={styles.kbdSmall}>↵</kbd> open
                 </span>
                 <span>
-                  <kbd className={styles.kbdSmall}>esc</kbd> zavrieť
+                  <kbd className={styles.kbdSmall}>esc</kbd> close
                 </span>
               </div>
             </div>
