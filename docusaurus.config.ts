@@ -11,7 +11,7 @@ const baseUrl = '/';
 
 const config: Config = {
   title: 'Jan Stary',
-  tagline: 'Úvahy o výchove z pohľadu mamy & učiteľky',
+  tagline: 'Software Architect & Software Engineer',
   favicon: 'img/favicon.ico',
 
   url: 'https://janstary.com',
