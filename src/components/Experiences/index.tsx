@@ -1,7 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
+import type {Capability} from '@site/src/components/Expertise';
 import styles from './styles.module.css';
 
-export interface ExperienceItem {
+export interface Experience {
   readonly company: string;
   readonly role: string;
   readonly start: Date;
@@ -9,11 +10,11 @@ export interface ExperienceItem {
   readonly location?: string;
   readonly domain?: string;
   readonly description: string;
-  readonly skills?: string[];
+  readonly capabilities: Capability[];
 }
 
-export interface ExperienceProps {
-  readonly items: ExperienceItem[];
+export interface ExperiencesProps {
+  readonly experiences: Experience[];
 }
 
 function initials(company: string): string {
@@ -73,11 +74,11 @@ export function formatPeriod(start: Date, end?: Date): string {
   } · ${formatDuration(totalMonths)}`;
 }
 
-function itemKey(item: ExperienceItem): string {
+function itemKey(item: Experience): string {
   return `${item.company}-${item.role}-${item.start.getTime()}`;
 }
 
-function Meta({item}: {item: ExperienceItem}): React.ReactElement {
+function Meta({item}: {item: Experience}): React.ReactElement {
   return (
     <div className={styles.meta}>
       <span className={styles.period}>
@@ -97,8 +98,8 @@ function Card({
   item,
   onOpen,
 }: {
-  item: ExperienceItem;
-  onOpen: (item: ExperienceItem, trigger: HTMLButtonElement) => void;
+  item: Experience;
+  onOpen: (item: Experience, trigger: HTMLButtonElement) => void;
 }): React.ReactElement {
   return (
     <button
@@ -113,10 +114,7 @@ function Card({
           <span className={styles.company}>{item.company}</span>
         </div>
         <Meta item={item} />
-        {item.domain && <span className={styles.domain}>{item.domain}</span>}
-        {item.description && (
-          <p className={styles.cardDescription}>{item.description}</p>
-        )}
+        <p className={styles.cardDescription}>{item.description}</p>
         <span className={styles.readMore}>
           Read more
           <span className={styles.readMoreArrow} aria-hidden="true">
@@ -134,8 +132,8 @@ function Timeline({
   items,
   onOpen,
 }: {
-  items: ExperienceItem[];
-  onOpen: (item: ExperienceItem, trigger: HTMLButtonElement) => void;
+  items: Experience[];
+  onOpen: (item: Experience, trigger: HTMLButtonElement) => void;
 }): React.ReactElement {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -214,14 +212,14 @@ function Timeline({
   );
 }
 
-export default function Experience({
-  items,
-}: ExperienceProps): React.ReactElement {
-  const [activeItem, setActiveItem] = useState<ExperienceItem | null>(null);
+export default function Experiences({
+  experiences,
+}: ExperiencesProps): React.ReactElement {
+  const [activeItem, setActiveItem] = useState<Experience | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
 
-  function openItem(item: ExperienceItem, trigger: HTMLButtonElement): void {
+  function openItem(item: Experience, trigger: HTMLButtonElement): void {
     lastTriggerRef.current = trigger;
     setActiveItem(item);
   }
@@ -250,7 +248,7 @@ export default function Experience({
 
   return (
     <>
-      <Timeline items={items} onOpen={openItem} />
+      <Timeline items={experiences} onOpen={openItem} />
 
       {activeItem && (
         <div
@@ -283,17 +281,12 @@ export default function Experience({
               </div>
             </div>
             <Meta item={activeItem} />
-            {activeItem.domain && (
-              <span className={styles.domain}>{activeItem.domain}</span>
-            )}
-            {activeItem.description && (
-              <p className={styles.description}>{activeItem.description}</p>
-            )}
-            {activeItem.skills && activeItem.skills.length > 0 && (
-              <ul className={styles.skills}>
-                {activeItem.skills.map((skill) => (
-                  <li key={skill} className={styles.skill}>
-                    {skill}
+            <p className={styles.description}>{activeItem.description}</p>
+            {activeItem.capabilities.length > 0 && (
+              <ul className={styles.capabilities}>
+                {activeItem.capabilities.map((capability) => (
+                  <li key={capability} className={styles.capability}>
+                    {capability}
                   </li>
                 ))}
               </ul>

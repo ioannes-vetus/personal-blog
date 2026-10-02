@@ -1,27 +1,28 @@
 import React from 'react';
 import {
   Document,
-  Page,
-  View,
-  Text,
-  Svg,
-  Path,
-  Rect,
-  Polyline,
   Line,
   Link,
+  Page,
+  Path,
+  Polyline,
+  Rect,
   StyleSheet,
+  Svg,
+  Text,
+  View,
 } from '@react-pdf/renderer';
-import {formatPeriod} from '@site/src/components/Experience';
-import {EXPERIENCE, INTRODUCTION, PROFILE} from '@site/src/data/profile';
-import {computeCareerStats} from '@site/src/data/careerStats';
-import {groupSkills} from '@site/src/data/capabilities';
+import {formatPeriod} from '@site/src/components/Experiences';
+import {EXPERIENCES} from '@site/src/data/experiences';
+import {PROFILE} from '@site/src/data/profile';
+import {computeCareerStats} from './careerStats';
+import {CAPABILITY_GROUPS} from '@site/src/data/capabilities';
 import {
   EMAIL_ICON,
   GITHUB_ICON,
   LINKEDIN_ICON,
   type SocialIcon,
-} from '@site/src/data/socialIcons';
+} from '@site/src/components/SocialLinks/icons';
 
 const INK = '#1c2b22';
 const GOLD = '#a3824f';
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   description: {fontSize: 10, lineHeight: 1.45, marginTop: 5},
-  skills: {fontFamily: 'Times-Italic', fontSize: 9, marginTop: 5},
+  capabilities: {fontFamily: 'Times-Italic', fontSize: 9, marginTop: 5},
   capabilitiesPanel: {
     backgroundColor: DARK,
     borderRadius: 10,
@@ -135,13 +136,12 @@ function PdfIcon({
   );
 }
 
-function itemKey(item: (typeof EXPERIENCE)[number]): string {
+function itemKey(item: (typeof EXPERIENCES)[number]): string {
   return `${item.company}-${item.role}-${item.start.getTime()}`;
 }
 
 export default function CvDocument(): React.ReactElement {
-  const stats = computeCareerStats(EXPERIENCE);
-  const groups = groupSkills(EXPERIENCE);
+  const stats = computeCareerStats(EXPERIENCES);
 
   return (
     <Document>
@@ -176,7 +176,7 @@ export default function CvDocument(): React.ReactElement {
 
         <Text style={styles.sectionTitle}>Introduction</Text>
         <View style={{marginBottom: 20}}>
-          <Text style={styles.paragraph}>{INTRODUCTION}</Text>
+          <Text style={styles.paragraph}>{PROFILE.introduction}</Text>
         </View>
 
         <View style={styles.statsRow}>
@@ -185,7 +185,7 @@ export default function CvDocument(): React.ReactElement {
               {stats.years}+
             </Text>
             <Text style={[styles.statLabel, {color: CREAM, opacity: 0.85}]}>
-              Years Building
+              Years
             </Text>
           </View>
           <View
@@ -198,7 +198,6 @@ export default function CvDocument(): React.ReactElement {
                 borderLeftColor: GOLD,
               },
             ]}>
-            <Text style={[styles.statValue, {color: GOLD}]}>{stats.roles}</Text>
             <Text style={[styles.statLabel, {color: GOLD}]}>Roles Held</Text>
           </View>
           <View
@@ -218,7 +217,7 @@ export default function CvDocument(): React.ReactElement {
         </View>
 
         <Text style={styles.sectionTitle}>Experience</Text>
-        {EXPERIENCE.map((item) => (
+        {EXPERIENCES.map((item) => (
           <View key={itemKey(item)} style={styles.experienceItem} wrap={false}>
             <Text style={styles.roleCompany}>
               {item.role} — {item.company}
@@ -228,14 +227,11 @@ export default function CvDocument(): React.ReactElement {
                 ? `${formatPeriod(item.start, item.end)} · ${item.location}`
                 : formatPeriod(item.start, item.end)}
             </Text>
-            {item.domain && (
-              <Text style={styles.domain}>{item.domain.toUpperCase()}</Text>
-            )}
-            {item.description && (
-              <Text style={styles.description}>{item.description}</Text>
-            )}
-            {item.skills && item.skills.length > 0 && (
-              <Text style={styles.skills}>{item.skills.join(' · ')}</Text>
+            <Text style={styles.description}>{item.description}</Text>
+            {item.capabilities.length > 0 && (
+              <Text style={styles.capabilities}>
+                {item.capabilities.join(' · ')}
+              </Text>
             )}
           </View>
         ))}
@@ -246,15 +242,19 @@ export default function CvDocument(): React.ReactElement {
             The stack changes from project to project — these are the areas I
             keep coming back to.
           </Text>
-          {groups.map((group, index) => (
+          {CAPABILITY_GROUPS.map((category, index) => (
             <View
-              key={group.title}
+              key={category.title}
               style={[
                 styles.capRow,
-                index === groups.length - 1 ? styles.capRowLast : undefined,
+                index === CAPABILITY_GROUPS.length - 1
+                  ? styles.capRowLast
+                  : undefined,
               ]}>
-              <Text style={styles.capTitle}>{group.title}</Text>
-              <Text style={styles.capSkills}>{group.skills.join(' · ')}</Text>
+              <Text style={styles.capTitle}>{category.title}</Text>
+              <Text style={styles.capSkills}>
+                {category.capabilities.join(' · ')}
+              </Text>
             </View>
           ))}
         </View>

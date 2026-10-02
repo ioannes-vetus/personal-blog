@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import clsx from 'clsx';
 import IconSvg from '@site/src/components/IconSvg';
-import {DOWNLOAD_ICON} from '@site/src/data/socialIcons';
+import {DOWNLOAD_ICON} from '@site/src/components/SocialLinks/icons';
 import styles from './styles.module.css';
 
 export interface DownloadCvButtonProps {

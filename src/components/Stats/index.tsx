@@ -1,28 +1,27 @@
 import React from 'react';
 import clsx from 'clsx';
-import type {ExperienceItem} from '@site/src/components/Experience';
-import {computeCareerStats} from '@site/src/data/careerStats';
 import styles from './styles.module.css';
 
-export interface StatsProps {
-  readonly items: ExperienceItem[];
+export interface CareerStats {
+  readonly years: number;
+  readonly domains: number;
+  readonly earliestRole: string;
+  readonly latestRole: string;
 }
 
-export default function Stats({items}: StatsProps): React.ReactElement {
-  const stats = computeCareerStats(items);
+export interface StatsProps {
+  readonly careerStats: CareerStats;
+}
 
+export default function Stats({careerStats}: StatsProps): React.ReactElement {
   return (
     <div className={styles.stack}>
       <div className={clsx(styles.card, styles.cardDark)}>
-        <span className={styles.value}>{stats.years}+</span>
+        <span className={styles.value}>{careerStats.years}+</span>
         <span className={styles.label}>Years</span>
       </div>
       <div className={clsx(styles.card, styles.cardGold)}>
-        <span className={styles.value}>{stats.roles}</span>
-        <span className={styles.label}>Roles Held</span>
-      </div>
-      <div className={clsx(styles.card, styles.cardGreen)}>
-        <span className={styles.value}>{stats.domains}</span>
+        <span className={styles.value}>{careerStats.domains}</span>
         <span className={styles.label}>Domains</span>
       </div>
     </div>

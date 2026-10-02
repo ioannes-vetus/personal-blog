@@ -1,11 +1,7 @@
 import React from 'react';
 import IconSvg from '@site/src/components/IconSvg';
 import DownloadCvButton from '@site/src/components/DownloadCvButton';
-import {
-  EMAIL_ICON,
-  GITHUB_ICON,
-  LINKEDIN_ICON,
-} from '@site/src/data/socialIcons';
+import {EMAIL_ICON, GITHUB_ICON, LINKEDIN_ICON} from './icons';
 import styles from './styles.module.css';
 
 export interface SocialLinksProps {
@@ -39,7 +35,7 @@ export default function SocialLinks({
       </a>
       <a className={styles.pill} href={`mailto:${email}`}>
         <IconSvg icon={EMAIL_ICON} size={16} />
-        Email
+        Get in touch
       </a>
       <DownloadCvButton className={styles.pill} />
     </div>

@@ -1,34 +1,31 @@
 import React from 'react';
 import Hero from '@site/src/components/Hero';
-import Stats from '@site/src/components/Stats';
+import Stats, {CareerStats} from '@site/src/components/Stats';
 import SocialLinks from '@site/src/components/SocialLinks';
-import type {ExperienceItem} from '@site/src/components/Experience';
 import styles from './styles.module.css';
 
-export interface BioProps {
-  readonly src: string;
+export interface Profile {
   readonly name: string;
   readonly role: string;
   readonly introduction: string;
+  readonly email: string;
   readonly linkedinUrl: string;
   readonly githubUrl: string;
-  readonly email: string;
-  readonly items: ExperienceItem[];
+  readonly imageSrc: string;
+}
+
+export interface BioProps {
+  readonly profile: Profile;
+  readonly careerStats: CareerStats;
 }
 
 export default function Bio({
-  src,
-  name,
-  role,
-  introduction,
-  linkedinUrl,
-  githubUrl,
-  email,
-  items,
+  profile,
+  careerStats,
 }: BioProps): React.ReactElement {
   return (
     <>
-      <Hero src={src} name={name} role={role} />
+      <Hero src={profile.imageSrc} name={profile.name} role={profile.role} />
 
       <div className={styles.bioGrid}>
         <div className={styles.bioColumn}>
@@ -37,14 +34,14 @@ export default function Bio({
             nothing left to add, but when there is nothing left to take away.”
             <footer>Antoine de Saint-Exupéry</footer>
           </blockquote>
-          <p>{introduction}</p>
+          <p>{profile.introduction}</p>
           <SocialLinks
-            linkedinUrl={linkedinUrl}
-            githubUrl={githubUrl}
-            email={email}
+            linkedinUrl={profile.linkedinUrl}
+            githubUrl={profile.githubUrl}
+            email={profile.email}
           />
         </div>
-        <Stats items={items} />
+        <Stats careerStats={careerStats} />
       </div>
     </>
   );

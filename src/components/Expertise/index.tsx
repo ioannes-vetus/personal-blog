@@ -1,19 +1,62 @@
 import React from 'react';
-import type {ExperienceItem} from '@site/src/components/Experience';
-import {groupSkills} from '@site/src/data/capabilities';
 import styles from './styles.module.css';
 
+export const CAPABILITIES = [
+  'Agentic Development',
+  'Agility',
+  'ArgoCD',
+  'Backend for Frontends',
+  'Code Reviews',
+  'Disaster Recovery',
+  'Distributed Systems',
+  'Docker',
+  'Engineering Standards',
+  'Enterprise Architecture',
+  'Event-Driven Architecture',
+  'GitOps',
+  'Harness engineering',
+  'Helm',
+  'Java',
+  'Kafka',
+  'Knowledge Sharing',
+  'Kubernetes',
+  'Mentoring',
+  'Micro Frontends',
+  'Microservices',
+  'MongoDB',
+  'noSQL',
+  'OAuth',
+  'Performance Reviews',
+  'Postgres',
+  'Quarkus',
+  'RabbitMQ',
+  'React',
+  'REST API',
+  'Scrum',
+  'Scrumban',
+  'Spring Boot',
+  'SQL',
+  'Team Topologies',
+  'Technical Strategy',
+  'TypeScript',
+] as const;
+
+export type Capability = (typeof CAPABILITIES)[number];
+
+export interface CapabilityGroup {
+  readonly title: string;
+  readonly description: string;
+  readonly accent: string;
+  readonly capabilities: Capability[];
+}
+
 export interface ExpertiseProps {
-  readonly items: ExperienceItem[];
-  readonly email: string;
+  readonly capabilityGroups: CapabilityGroup[];
 }
 
 export default function Expertise({
-  items,
-  email,
+  capabilityGroups,
 }: ExpertiseProps): React.ReactElement {
-  const groups = groupSkills(items);
-
   return (
     <div className={styles.panel}>
       <span className={styles.eyebrow}>Capabilities</span>
@@ -24,39 +67,32 @@ export default function Expertise({
       </p>
 
       <div className={styles.rows}>
-        {groups.map((group) => (
-          <div key={group.title} className={styles.row}>
+        {capabilityGroups.map((capabilityGroup) => (
+          <div key={capabilityGroup.title} className={styles.row}>
             <div className={styles.rowLabel}>
               <span
                 className={styles.accentBar}
-                style={{background: group.accent}}
+                style={{background: capabilityGroup.accent}}
                 aria-hidden="true"
               />
               <div>
-                <h3 className={styles.rowTitle}>{group.title}</h3>
-                {group.description && (
-                  <p className={styles.rowDescription}>{group.description}</p>
+                <h3 className={styles.rowTitle}>{capabilityGroup.title}</h3>
+                {capabilityGroup.description && (
+                  <p className={styles.rowDescription}>
+                    {capabilityGroup.description}
+                  </p>
                 )}
               </div>
             </div>
             <ul className={styles.pills}>
-              {group.skills.map((skill) => (
-                <li key={skill} className={styles.pill}>
-                  {skill}
+              {capabilityGroup.capabilities.map((capability) => (
+                <li key={capability} className={styles.pill}>
+                  {capability}
                 </li>
               ))}
             </ul>
           </div>
         ))}
-      </div>
-
-      <div className={styles.closing}>
-        <p className={styles.closingText}>
-          I help teams architect and ship systems that hold up under real usage.
-        </p>
-        <a className={styles.cta} href={`mailto:${email}`}>
-          Get in touch <span aria-hidden="true">→</span>
-        </a>
       </div>
     </div>
   );

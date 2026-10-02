@@ -1,8 +1,18 @@
 import React from 'react';
-import type {SocialIcon} from '@site/src/data/socialIcons';
+
+export interface IconShape {
+  readonly tag: string;
+  readonly attrs: Record<string, string>;
+}
+
+export interface IconDefinition {
+  readonly viewBox: string;
+  readonly shapes: readonly IconShape[];
+  readonly stroke: boolean;
+}
 
 export interface IconSvgProps {
-  icon: SocialIcon;
+  icon: IconDefinition;
   size?: number;
 }
 

@@ -1,0 +1,56 @@
+.panel {
+  margin-top: 3.5rem;
+  padding: 2.5rem;
+  background: var(--brand-footer-bg);
+  border-radius: 20px;
+  text-align: left;
+}
+
+.eyebrow {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brand-gold);
+  margin-bottom: 1.25rem;
+}
+
+.heading {
+  margin: 0.4rem 0 0.6rem;
+  color: var(--brand-overlay-text);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 980px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  padding: 1.1rem 1.25rem;
+  background: rgba(248, 246, 240, 0.06);
+  border: 1px solid rgba(248, 246, 240, 0.14);
+  border-radius: 10px;
+}
+
+.text {
+  margin: 0;
+  font-family: var(--ifm-heading-font-family);
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--brand-overlay-text);
+}

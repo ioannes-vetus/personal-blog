@@ -1,19 +1,20 @@
 import React, {useState} from 'react';
 import clsx from 'clsx';
-import Experience from '@site/src/components/Experience';
-import type {ExperienceItem} from '@site/src/components/Experience';
-import {computeCareerStats} from '@site/src/data/careerStats';
+import type {Experience} from '@site/src/components/Experiences';
+import Experiences from '@site/src/components/Experiences';
 import styles from './styles.module.css';
+import {CareerStats} from '@site/src/components/Stats';
 
 export interface WorkHistoryProps {
-  readonly items: ExperienceItem[];
+  readonly experiences: Experience[];
+  readonly careerStats: CareerStats;
 }
 
 export default function WorkHistory({
-  items,
+  experiences,
+  careerStats,
 }: WorkHistoryProps): React.ReactElement {
   const [showHistory, setShowHistory] = useState(false);
-  const careerStats = computeCareerStats(items);
 
   return (
     <div className={styles.section}>
@@ -42,7 +43,7 @@ export default function WorkHistory({
       </div>
       {showHistory && (
         <div className={styles.history}>
-          <Experience items={items} />
+          <Experiences experiences={experiences} />
         </div>
       )}
     </div>
