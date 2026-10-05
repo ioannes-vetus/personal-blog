@@ -41,8 +41,9 @@
 
 .card {
   padding: 1.1rem 1.25rem;
-  background: rgba(248, 246, 240, 0.06);
-  border: 1px solid rgba(248, 246, 240, 0.14);
+  background: color-mix(in srgb, var(--brand-overlay-text) 6%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--brand-overlay-text) 14%, transparent);
   border-radius: 10px;
 }
 

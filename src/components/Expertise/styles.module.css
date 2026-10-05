@@ -39,7 +39,8 @@
   flex-direction: column;
   gap: 1rem;
   padding: 1.25rem 0;
-  border-bottom: 1px solid rgba(248, 246, 240, 0.12);
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--brand-overlay-text) 12%, transparent);
 }
 
 .row:last-child {
@@ -100,8 +101,9 @@
 .pill {
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
-  background: rgba(248, 246, 240, 0.08);
-  border: 1px solid rgba(248, 246, 240, 0.16);
+  background: color-mix(in srgb, var(--brand-overlay-text) 8%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--brand-overlay-text) 16%, transparent);
   color: var(--brand-overlay-text);
   font-size: 0.85rem;
 }
@@ -113,7 +115,8 @@
   align-items: flex-start;
   margin-top: 2rem;
   padding-top: 1.75rem;
-  border-top: 1px solid rgba(248, 246, 240, 0.12);
+  border-top: 1px solid
+    color-mix(in srgb, var(--brand-overlay-text) 12%, transparent);
 }
 
 @media (min-width: 640px) {
