@@ -44,8 +44,8 @@ Site search is entirely hand-rolled, not Algolia/local-search:
 
 ### Theming
 
-`src/css/custom.css` defines the "old money" dark-green palette and typography (Fraunces for
-headings, Inter for body) as CSS custom properties, with a separate `[data-theme='dark']` block for
+`src/css/custom.css` defines the "old money" dark-green palette and typography (JetBrains Mono for
+both headings and body) as CSS custom properties, with a separate `[data-theme='dark']` block for
 the dark-mode variants. Two things to know before touching it:
 
 - `--brand-ink` is a *foreground* color that intentionally flips light↔dark between themes — never
