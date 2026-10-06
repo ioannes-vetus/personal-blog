@@ -9,6 +9,10 @@ import {buildSearchIndex} from './src/searchIndex';
 // so the site lives at the domain root rather than under a /<repo>/ path.
 const baseUrl = '/';
 
+// Umami Cloud analytics (cookieless, no consent banner needed). The website ID is public — it ends
+// up in the served HTML anyway.
+const umamiWebsiteId = 'ed7e745a-c4b6-4fa0-895e-98909df5f724';
+
 const config: Config = {
   title: 'Jan Stary',
   tagline: 'Software Architect & Software Engineer',
@@ -37,6 +41,16 @@ const config: Config = {
     {
       href: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap',
       type: 'text/css',
+    },
+  ],
+
+  scripts: [
+    {
+      src: 'https://cloud.umami.is/script.js',
+      defer: true,
+      'data-website-id': umamiWebsiteId,
+      // Only count visits on the real domain, not `yarn start` / `yarn serve` on localhost.
+      'data-domains': 'janstary.com',
     },
   ],
 

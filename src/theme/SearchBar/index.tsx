@@ -16,6 +16,12 @@ interface SearchDoc {
 
 type Hit = SearchResult & SearchDoc;
 
+declare global {
+  interface Window {
+    umami?: {track: (event: string, data?: Record<string, string>) => void};
+  }
+}
+
 const MAX_RESULTS = 12;
 const MIN_QUERY_LENGTH = 2;
 
@@ -95,10 +101,11 @@ export default function SearchBar(): React.ReactElement {
 
   const navigate = useCallback(
     (url: string) => {
+      window.umami?.track('search-select', {query, url});
       setIsOpen(false);
       history.push(siteConfig.baseUrl + url.replace(/^\//, ''));
     },
-    [history, siteConfig.baseUrl],
+    [history, siteConfig.baseUrl, query],
   );
 
   const handleKeyDown = useCallback(
