@@ -1,6 +1,8 @@
 import React from 'react';
+import siteConfig from '@generated/docusaurus.config';
 import {
   Document,
+  Font,
   Line,
   Link,
   Page,
@@ -13,6 +15,7 @@ import {
   View,
 } from '@react-pdf/renderer';
 import {formatPeriod} from '@site/src/components/Experiences';
+import {EDUCATION} from '@site/src/data/education';
 import {EXPERIENCES} from '@site/src/data/experiences';
 import {PROFILE} from '@site/src/data/profile';
 import {computeCareerStats} from './careerStats';
@@ -24,19 +27,44 @@ import {
   type SocialIcon,
 } from '@site/src/components/SocialLinks/icons';
 
+export interface Education {
+  readonly school: string;
+  readonly degree?: string;
+  readonly fieldOfStudy: string;
+  readonly start: Date;
+  readonly end?: Date;
+}
+
 const INK = '#1c2b22';
 const GOLD = '#a3824f';
 const CREAM = '#f8f6f0';
 const DARK = '#16241a';
 
+const FONT_FAMILY = 'JetBrains Mono';
+const FONT_BASE = `${siteConfig.baseUrl}fonts/JetBrainsMono`;
+
+Font.register({
+  family: FONT_FAMILY,
+  fonts: [
+    {src: `${FONT_BASE}-Regular.ttf`},
+    {src: `${FONT_BASE}-Bold.ttf`, fontWeight: 'bold'},
+    {src: `${FONT_BASE}-Italic.ttf`, fontStyle: 'italic'},
+    {
+      src: `${FONT_BASE}-BoldItalic.ttf`,
+      fontWeight: 'bold',
+      fontStyle: 'italic',
+    },
+  ],
+});
+
 const styles = StyleSheet.create({
   page: {
     padding: 40,
-    fontFamily: 'Times-Roman',
+    fontFamily: FONT_FAMILY,
     fontSize: 10,
     color: INK,
   },
-  name: {fontFamily: 'Times-Bold', fontSize: 22, marginBottom: 4},
+  name: {fontWeight: 'bold', fontSize: 22, marginBottom: 4},
   role: {fontSize: 12, color: GOLD, marginBottom: 12},
   contactRow: {flexDirection: 'row', marginBottom: 16},
   contactItem: {
@@ -52,40 +80,42 @@ const styles = StyleSheet.create({
     borderBottomColor: GOLD,
     marginBottom: 18,
   },
-  sectionTitle: {fontFamily: 'Times-Bold', fontSize: 14, marginBottom: 10},
+  sectionTitle: {fontWeight: 'bold', fontSize: 14, marginBottom: 10},
+  sectionAfterPanel: {marginTop: 24},
   paragraph: {fontSize: 10.5, lineHeight: 1.5},
   quote: {
-    fontFamily: 'Times-Italic',
+    fontStyle: 'italic',
     fontSize: 10.5,
     lineHeight: 1.4,
     marginBottom: 6,
   },
-  quoteAuthor: {fontFamily: 'Times-Italic', fontSize: 9.5, color: GOLD},
+  quoteAuthor: {fontStyle: 'italic', fontSize: 9.5, color: GOLD},
   introBlock: {marginBottom: 20},
   statsRow: {flexDirection: 'row', marginBottom: 24},
   statCard: {flex: 1, borderRadius: 6, padding: 10, marginRight: 10},
   statCardLast: {marginRight: 0},
-  statValue: {fontFamily: 'Times-Bold', fontSize: 17},
+  statValue: {fontWeight: 'bold', fontSize: 17},
   statLabel: {fontSize: 8.5, marginTop: 2},
   experienceItem: {marginBottom: 16},
-  roleCompany: {fontFamily: 'Times-Bold', fontSize: 11.5},
+  roleCompany: {fontWeight: 'bold', fontSize: 11.5},
   meta: {fontSize: 9.5, color: GOLD, marginTop: 3},
   domain: {
-    fontFamily: 'Times-BoldItalic',
+    fontWeight: 'bold',
+    fontStyle: 'italic',
     fontSize: 8,
     color: GOLD,
     marginTop: 5,
     letterSpacing: 0.5,
   },
   description: {fontSize: 10, lineHeight: 1.45, marginTop: 5},
-  capabilities: {fontFamily: 'Times-Italic', fontSize: 9, marginTop: 5},
+  capabilities: {fontStyle: 'italic', fontSize: 9, marginTop: 5},
   capabilitiesPanel: {
     backgroundColor: DARK,
     borderRadius: 10,
     padding: 20,
     marginTop: 8,
   },
-  capHeading: {fontFamily: 'Times-Bold', fontSize: 14, color: CREAM},
+  capHeading: {fontWeight: 'bold', fontSize: 14, color: CREAM},
   capIntro: {
     fontSize: 9.5,
     color: CREAM,
@@ -101,7 +131,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'rgba(248, 246, 240, 0.2)',
   },
   capRowLast: {borderBottomWidth: 0, marginBottom: 0, paddingBottom: 0},
-  capTitle: {fontFamily: 'Times-Bold', fontSize: 10.5, color: CREAM},
+  capTitle: {fontWeight: 'bold', fontSize: 10.5, color: CREAM},
   capSkills: {fontSize: 9, color: CREAM, opacity: 0.85, marginTop: 3},
 });
 
@@ -140,6 +170,10 @@ function itemKey(item: (typeof EXPERIENCES)[number]): string {
   return `${item.company}-${item.role}-${item.start.getTime()}`;
 }
 
+function educationKey(item: Education): string {
+  return `${item.school}-${item.fieldOfStudy}-${item.start.getTime()}`;
+}
+
 export default function CvDocument(): React.ReactElement {
   const stats = computeCareerStats(EXPERIENCES);
 
@@ -152,7 +186,7 @@ export default function CvDocument(): React.ReactElement {
         <View style={styles.contactRow}>
           <Link src={`mailto:${PROFILE.email}`} style={styles.contactItem}>
             <PdfIcon icon={EMAIL_ICON} />
-            <Text style={styles.contactLabel}>{PROFILE.email}</Text>
+            <Text style={styles.contactLabel}>Email</Text>
           </Link>
           <Link src={PROFILE.linkedinUrl} style={styles.contactItem}>
             <PdfIcon icon={LINKEDIN_ICON} />
@@ -198,21 +232,12 @@ export default function CvDocument(): React.ReactElement {
                 borderLeftColor: GOLD,
               },
             ]}>
-            <Text style={[styles.statLabel, {color: GOLD}]}>Roles Held</Text>
-          </View>
-          <View
-            style={[
-              styles.statCard,
-              styles.statCardLast,
-              {
-                borderWidth: 0.75,
-                borderColor: 'rgba(163, 130, 79, 0.35)',
-                borderLeftWidth: 3,
-                borderLeftColor: INK,
-              },
-            ]}>
-            <Text style={styles.statValue}>{stats.domains}</Text>
-            <Text style={styles.statLabel}>Domains</Text>
+            <Text style={[styles.statValue, {color: GOLD}]}>
+              {stats.domains}
+            </Text>
+            <Text style={[styles.statLabel, {color: GOLD, opacity: 0.85}]}>
+              Domains
+            </Text>
           </View>
         </View>
 
@@ -258,6 +283,28 @@ export default function CvDocument(): React.ReactElement {
             </View>
           ))}
         </View>
+
+        {EDUCATION.length > 0 && (
+          <>
+            <Text style={[styles.sectionTitle, styles.sectionAfterPanel]}>
+              Education
+            </Text>
+            {EDUCATION.map((item) => (
+              <View
+                key={educationKey(item)}
+                style={styles.experienceItem}
+                wrap={false}>
+                <Text style={styles.roleCompany}>
+                  {[item.degree, item.fieldOfStudy].filter(Boolean).join(', ')}{' '}
+                  — {item.school}
+                </Text>
+                <Text style={styles.meta}>
+                  {formatPeriod(item.start, item.end)}
+                </Text>
+              </View>
+            ))}
+          </>
+        )}
       </Page>
     </Document>
   );
