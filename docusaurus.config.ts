@@ -37,13 +37,6 @@ const config: Config = {
     locales: ['en'],
   },
 
-  stylesheets: [
-    {
-      href: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap',
-      type: 'text/css',
-    },
-  ],
-
   scripts: [
     {
       src: 'https://cloud.umami.is/script.js',
