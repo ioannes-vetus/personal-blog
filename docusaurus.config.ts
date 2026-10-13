@@ -95,7 +95,7 @@ const config: Config = {
           html: `<a href="${baseUrl}blog/rss.xml" target="_blank" rel="noopener noreferrer" title="RSS Feed" aria-label="RSS Feed" class="footer-social-link"><img src="${baseUrl}img/rss.svg" width="14" height="14" alt="RSS Feed"/></a>`,
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Ján Starý`,
+      copyright: `Copyright © ${new Date().getFullYear()} Ján Starý · <a href="${baseUrl}privacy">Privacy</a>`,
     },
     prism: {
       theme: prismThemes.github,
