@@ -1,7 +1,8 @@
 import React from 'react';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import IconSvg from '@site/src/components/IconSvg';
 import DownloadCvButton from '@site/src/components/DownloadCvButton';
-import {EMAIL_ICON, GITHUB_ICON, LINKEDIN_ICON} from './icons';
+import {EMAIL_ICON, GITHUB_ICON, LINKEDIN_ICON, RSS_ICON} from './icons';
 import styles from './styles.module.css';
 
 export interface SocialLinksProps {
@@ -15,8 +16,14 @@ export default function SocialLinks({
   githubUrl,
   email,
 }: SocialLinksProps): React.ReactElement {
+  const rssUrl = useBaseUrl('/blog/rss.xml');
+
   return (
     <div className={styles.row}>
+      <a className={styles.pill} href={`mailto:${email}`}>
+        <IconSvg icon={EMAIL_ICON} size={16} />
+        Mail
+      </a>
       <a
         className={styles.pill}
         href={linkedinUrl}
@@ -33,9 +40,9 @@ export default function SocialLinks({
         <IconSvg icon={GITHUB_ICON} size={16} />
         GitHub
       </a>
-      <a className={styles.pill} href={`mailto:${email}`}>
-        <IconSvg icon={EMAIL_ICON} size={16} />
-        Get in touch
+      <a className={styles.pill} href={rssUrl}>
+        <IconSvg icon={RSS_ICON} size={16} />
+        RSS
       </a>
       <DownloadCvButton className={styles.pill} />
     </div>

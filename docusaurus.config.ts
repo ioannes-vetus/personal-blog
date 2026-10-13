@@ -83,7 +83,7 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          html: `<a href="${baseUrl}blog/rss.xml" target="_blank" rel="noopener noreferrer" title="RSS Feed" aria-label="RSS Feed" class="footer-social-link"><img src="${baseUrl}img/rss.svg" width="14" height="14" alt="RSS Feed"/></a>`,
+          html: `<a href="mailto:jan.stary@protonmail.com" title="E-mail" aria-label="E-mail" class="footer-social-link"><img src="${baseUrl}img/mail.svg" width="14" height="14" alt="E-mail"/></a>`,
         },
         {
           html: `<a href="https://www.linkedin.com/in/ján-starý-034626134" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn" class="footer-social-link"><img src="${baseUrl}img/linkedin.svg" width="14" height="14" alt="LinkedIn"/></a>`,
@@ -92,7 +92,7 @@ const config: Config = {
           html: `<a href="https://github.com/ioannes-vetus" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub" class="footer-social-link"><img src="${baseUrl}img/github.svg" width="14" height="14" alt="GitHub"/></a>`,
         },
         {
-          html: `<a href="mailto:jan.stary@protonmail.com" title="E-mail" aria-label="E-mail" class="footer-social-link"><img src="${baseUrl}img/mail.svg" width="14" height="14" alt="E-mail"/></a>`,
+          html: `<a href="${baseUrl}blog/rss.xml" target="_blank" rel="noopener noreferrer" title="RSS Feed" aria-label="RSS Feed" class="footer-social-link"><img src="${baseUrl}img/rss.svg" width="14" height="14" alt="RSS Feed"/></a>`,
         },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Ján Starý`,

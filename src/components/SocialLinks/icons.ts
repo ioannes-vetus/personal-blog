@@ -10,6 +10,16 @@ export const EMAIL_ICON = {
   stroke: true,
 } as const;
 
+export const RSS_ICON = {
+  viewBox: '0 0 24 24',
+  shapes: [
+    {tag: 'path', attrs: {d: 'M4 11a9 9 0 0 1 9 9'}},
+    {tag: 'path', attrs: {d: 'M4 4a16 16 0 0 1 16 16'}},
+    {tag: 'path', attrs: {d: 'M4 19a1 1 0 1 0 2 0a1 1 0 1 0 -2 0'}},
+  ],
+  stroke: true,
+} as const;
+
 export const LINKEDIN_ICON = {
   viewBox: '0 0 24 24',
   shapes: [
@@ -48,6 +58,7 @@ export const DOWNLOAD_ICON = {
 
 export type SocialIcon =
   | typeof EMAIL_ICON
+  | typeof RSS_ICON
   | typeof LINKEDIN_ICON
   | typeof GITHUB_ICON
   | typeof DOWNLOAD_ICON;
