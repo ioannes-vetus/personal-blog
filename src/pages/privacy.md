@@ -14,7 +14,7 @@ when you visit it.
 
 ## Who is responsible
 
-Ján Starý, reachable at [jan.stary@protonmail.com](mailto:jan.stary@protonmail.com).
+Ján Starý, reachable at [jan@janstary.com](mailto:jan@janstary.com).
 
 ## What is processed
 
