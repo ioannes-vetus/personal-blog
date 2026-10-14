@@ -83,7 +83,7 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          html: `<a href="mailto:jan.stary@protonmail.com" title="E-mail" aria-label="E-mail" class="footer-social-link"><img src="${baseUrl}img/mail.svg" width="14" height="14" alt="E-mail"/></a>`,
+          html: `<a href="mailto:jan@janstary.com" title="E-mail" aria-label="E-mail" class="footer-social-link"><img src="${baseUrl}img/mail.svg" width="14" height="14" alt="E-mail"/></a>`,
         },
         {
           html: `<a href="https://www.linkedin.com/in/ján-starý-034626134" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn" class="footer-social-link"><img src="${baseUrl}img/linkedin.svg" width="14" height="14" alt="LinkedIn"/></a>`,

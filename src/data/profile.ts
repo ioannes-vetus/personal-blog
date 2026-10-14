@@ -14,7 +14,7 @@ export const PROFILE: Profile = {
     'process. I always try to learn from the people I work with, but I ' +
     'like to pass on my knowledge to others too. My specialties include ' +
     'API design, Software/System Architecture, Software Engineering.',
-  email: 'jan.stary@protonmail.com',
+  email: 'jan@janstary.com',
   linkedinUrl: 'https://www.linkedin.com/in/ján-starý-034626134',
   githubUrl: 'https://github.com/ioannes-vetus',
   imageSrc: '/img/me.jpeg',
